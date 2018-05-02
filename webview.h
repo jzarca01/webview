@@ -1223,10 +1223,12 @@ WEBVIEW_API int webview_init(struct webview *w) {
     style = WS_OVERLAPPED | WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
   }
 
-    w->title := "Mobile "+w->title;
+  if(w->mobile) {
+    webview_set_title(w, "Mobile");
     WebKitSettings *settings = webkit_web_view_get_settings(WEBKIT_WEB_VIEW(w->priv.webview));
     webkit_settings_set_user_agent(settings, "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0_2 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A421 Safari/604.1");
-
+  }
+  
   rect.left = 0;
   rect.top = 0;
   rect.right = w->width;
