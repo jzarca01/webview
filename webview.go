@@ -34,7 +34,7 @@ static inline void CgoWebViewFree(void *w) {
 	free(w);
 }
 
-static inline void *CgoWebViewCreate(int width, int height, char *title, char *url, int resizable, int debug) {
+static inline void *CgoWebViewCreate(int width, int height, char *title, char *url, int resizable, int debug, int mobile) {
 	struct webview *w = (struct webview *) calloc(1, sizeof(*w));
 	w->width = width;
 	w->height = height;
@@ -42,6 +42,7 @@ static inline void *CgoWebViewCreate(int width, int height, char *title, char *u
 	w->url = url;
 	w->resizable = resizable;
 	w->debug = debug;
+	w->mobile = mobile;
 	w->external_invoke_cb = (webview_external_invoke_cb_t) _webviewExternalInvokeCallback;
 	if (webview_init(w) != 0) {
 		CgoWebViewFree(w);
@@ -179,6 +180,8 @@ type Settings struct {
 	Resizable bool
 	// Enable debugging tools (Linux/BSD/MacOS, on Windows use Firebug)
 	Debug bool
+	// Enable mobile useragent
+	Mobile bool
 	// A callback that is executed when JavaScript calls "window.external.invoke()"
 	ExternalInvokeCallback ExternalInvokeCallbackFunc
 }
@@ -291,7 +294,7 @@ func New(settings Settings) WebView {
 	w := &webview{}
 	w.w = C.CgoWebViewCreate(C.int(settings.Width), C.int(settings.Height),
 		C.CString(settings.Title), C.CString(settings.URL),
-		C.int(boolToInt(settings.Resizable)), C.int(boolToInt(settings.Debug)))
+		C.int(boolToInt(settings.Resizable)), C.int(boolToInt(settings.Debug), C.int(boolToInt(settings.Mobile)))
 	m.Lock()
 	if settings.ExternalInvokeCallback != nil {
 		cbs[w] = settings.ExternalInvokeCallback

@@ -101,6 +101,7 @@ struct webview {
   int height;
   int resizable;
   int debug;
+  int mobile;
   webview_external_invoke_cb_t external_invoke_cb;
   struct webview_priv priv;
   void *userdata;
@@ -323,6 +324,11 @@ WEBVIEW_API int webview_init(struct webview *w) {
   g_signal_connect(G_OBJECT(w->priv.webview), "load-changed",
                    G_CALLBACK(webview_load_changed_cb), w);
   gtk_container_add(GTK_CONTAINER(w->priv.scroller), w->priv.webview);
+
+  if (w->mobile) {
+    WebKitSettings *settings =
+        webkit_settings_set_user_agent("Mozilla/5.0 (iPhone; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.25 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1");
+  }
 
   if (w->debug) {
     WebKitSettings *settings =
