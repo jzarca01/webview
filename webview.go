@@ -121,21 +121,25 @@ func init() {
 // it. It can be helpful if you want to communicate with the core app using XHR
 // or WebSockets (as opposed to using JavaScript bindings).
 //
-// Window appearance can be customized using title, width, height and resizable parameters.
+// Window appearance can be customized using title, width, height, resizable, mobile parameters.
 // URL must be provided and can user either a http or https protocol, or be a
 // local file:// URL. On some platforms "data:" URLs are also supported
 // (Linux/MacOS).
-func Open(title, url string, w, h int, resizable bool) error {
+func Open(title, url string, w, h int, resizable bool, mobile bool) error {
 	titleStr := C.CString(title)
 	defer C.free(unsafe.Pointer(titleStr))
 	urlStr := C.CString(url)
 	defer C.free(unsafe.Pointer(urlStr))
 	resize := C.int(0)
+	mobile := C.int(0)
 	if resizable {
 		resize = C.int(1)
 	}
+	if mobile {
+		mobile = C.int(1)
+	}
 
-	r := C.webview(titleStr, urlStr, C.int(w), C.int(h), resize)
+	r := C.webview(titleStr, urlStr, C.int(w), C.int(h), resize, mobile)
 	if r != 0 {
 		return errors.New("failed to create webview")
 	}
