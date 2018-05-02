@@ -100,8 +100,8 @@ struct webview {
   int width;
   int height;
   int resizable;
-  int debug;
   int mobile;
+  int debug;
   webview_external_invoke_cb_t external_invoke_cb;
   struct webview_priv priv;
   void *userdata;
@@ -152,7 +152,7 @@ static const char *webview_check_url(const char *url) {
 }
 
 WEBVIEW_API int webview(const char *title, const char *url, int width,
-                        int height, int resizable);
+                        int height, int resizable, int mobile);
 
 WEBVIEW_API int webview_init(struct webview *w);
 WEBVIEW_API int webview_loop(struct webview *w, int blocking);
@@ -177,7 +177,7 @@ WEBVIEW_API void webview_print_log(const char *s);
 #undef WEBVIEW_IMPLEMENTATION
 
 WEBVIEW_API int webview(const char *title, const char *url, int width,
-                        int height, int resizable) {
+                        int height, int resizable, int mobile) {
   struct webview webview;
   memset(&webview, 0, sizeof(webview));
   webview.title = title;
@@ -185,6 +185,7 @@ WEBVIEW_API int webview(const char *title, const char *url, int width,
   webview.width = width;
   webview.height = height;
   webview.resizable = resizable;
+  webview.mobile = mobile;
   int r = webview_init(&webview);
   if (r != 0) {
     return r;

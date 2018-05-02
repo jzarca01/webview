@@ -120,6 +120,7 @@ func main() {
 		Height:    windowHeight,
 		Title:     "Simple window demo",
 		Resizable: true,
+		Mobile:    false,
 		URL:       url,
 		ExternalInvokeCallback: handleRPC,
 	})

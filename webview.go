@@ -34,7 +34,7 @@ static inline void CgoWebViewFree(void *w) {
 	free(w);
 }
 
-static inline void *CgoWebViewCreate(int width, int height, char *title, char *url, int resizable, int debug, int mobile) {
+static inline void *CgoWebViewCreate(int width, int height, char *title, char *url, int resizable, int mobile, int debug) {
 	struct webview *w = (struct webview *) calloc(1, sizeof(*w));
 	w->width = width;
 	w->height = height;
@@ -131,15 +131,15 @@ func Open(title, url string, w, h int, resizable bool, mobile bool) error {
 	urlStr := C.CString(url)
 	defer C.free(unsafe.Pointer(urlStr))
 	resize := C.int(0)
-	mobile := C.int(0)
+	isMobile := C.int(0)
 	if resizable {
 		resize = C.int(1)
 	}
 	if mobile {
-		mobile = C.int(1)
+		isMobile = C.int(1)
 	}
 
-	r := C.webview(titleStr, urlStr, C.int(w), C.int(h), resize, mobile)
+	r := C.webview(titleStr, urlStr, C.int(w), C.int(h), resize, isMobile)
 	if r != 0 {
 		return errors.New("failed to create webview")
 	}

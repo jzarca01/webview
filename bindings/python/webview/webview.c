@@ -25,12 +25,12 @@ static PyObject *WebView_new(PyTypeObject *type, PyObject *args,
 static int WebView_init(WebView *self, PyObject *args, PyObject *kwds) {
   const char *url = NULL;
   const char *title = NULL;
-  static char *kwlist[] = {"width", "height", "resizable", "debug", "mobile",
+  static char *kwlist[] = {"width", "height", "resizable", "mobile", "debug",
                            "url",   "title",  NULL};
 
   if (!PyArg_ParseTupleAndKeywords(
           args, kwds, "ii|iiss", kwlist, &self->w.width, &self->w.height,
-          &self->w.resizable, &self->w.debug, &self->w.mobile, &url, &title)) {
+          &self->w.resizable, &self->w.mobile, &self->w.debug, &url, &title)) {
     return -1;
   }
 

@@ -241,6 +241,7 @@ If you want to have more control over the app lifecycle you can use the followin
       .height = h,
       .debug = debug,
       .resizable = resizable,
+      .mobile = mobile
   };
   /* Create webview window using the provided options */
   webview_init(&webview);
