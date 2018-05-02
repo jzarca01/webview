@@ -295,6 +295,7 @@ func New(settings Settings) WebView {
 	w.w = C.CgoWebViewCreate(C.int(settings.Width), C.int(settings.Height),
 		C.CString(settings.Title), C.CString(settings.URL),
 		C.int(boolToInt(settings.Resizable)), C.int(boolToInt(settings.Debug)), C.int(boolToInt(settings.Mobile)))
+
 	m.Lock()
 	if settings.ExternalInvokeCallback != nil {
 		cbs[w] = settings.ExternalInvokeCallback
