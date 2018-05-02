@@ -327,8 +327,10 @@ WEBVIEW_API int webview_init(struct webview *w) {
   gtk_container_add(GTK_CONTAINER(w->priv.scroller), w->priv.webview);
 
   if (w->mobile) {
+    webview_set_title(w, "Mobile "+w.title);
     WebKitSettings *settings =
-        webkit_settings_set_user_agent(settings, "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0_2 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A421 Safari/604.1");
+        webkit_web_view_get_settings(WEBKIT_WEB_VIEW(w->priv.webview));
+    webkit_settings_set_user_agent(settings, "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0_2 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A421 Safari/604.1");
   }
 
   if (w->debug) {
