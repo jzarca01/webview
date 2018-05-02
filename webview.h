@@ -328,7 +328,7 @@ WEBVIEW_API int webview_init(struct webview *w) {
 
   if (w->mobile) {
     WebKitSettings *settings =
-        webkit_settings_set_user_agent("Mozilla/5.0 (iPhone; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.25 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1");
+        webkit_settings_set_user_agent(settings, "Mozilla/5.0 (iPhone; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.25 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1");
   }
 
   if (w->debug) {
